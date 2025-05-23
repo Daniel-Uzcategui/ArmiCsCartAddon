@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>armi_shipping</id>
+    <version>1.0.0</version>
+    <priority>4200</priority>
+    <position>0</position>
+    <status>active</status>
+    <default_language>en</default_language>
+    <compatibility>
+        <core_version>
+            <min>4.18.1</min>
+        </core_version>
+        <core_edition>
+            MULTIVENDOR,ULTIMATE
+        </core_edition>
+    </compatibility>
+    <supplier>Unify</supplier>
+    <supplier_link>mailto:info@unifyb2b.net</supplier_link>
+    <authors>
+        <author>
+            <name>Unify</name>
+            <email>info@unifyb2b.net</email>
+            <url>mailto:info@unifyb2b.net</url>
+        </author>
+    </authors>
+    <name>Armi Shipping Services</name>
+    <description>Integrates Armi delivery services for dynamic shipping cost calculation using latitude/longitude and order management.</description>
+    <settings>
+        <sections>
+            <section id="general">
+                <name>General Settings</name>
+                <items>
+                    <item id="google_maps_api_key">
+                        <name>Google Maps API Key</name>
+                        <type>input</type>
+                        <default_value>AIzaSyBALQyZf54Qvxz9xFkEUXnvQXrRp9P8GXI</default_value>
+                    </item>
+                    <item id="armi_api_base_url">
+                        <name>Armi API Base URL</name>
+                        <type>input</type>
+                        <default_value>https://armi-business-monitor-dot-armirene-369418.uc.r.appspot.com</default_value>
+                        <tooltip>The base URL for the Armi API. Change only if you have a custom endpoint.</tooltip>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+    <functions>
+        <item for="install">fn_armi_shipping_install</item>
+        <item for="uninstall">fn_armi_shipping_uninstall</item>
+    </functions>
+    <queries>
+        <item for="install">
+            CREATE TABLE IF NOT EXISTS `?:armi_order_data` (
+                `order_id` MEDIUMINT UNSIGNED NOT NULL,
+                `armi_order_id` VARCHAR(255) DEFAULT NULL,
+                `armi_last_status_code` INT DEFAULT NULL,
+                `armi_vehicle_type_id` INT DEFAULT NULL,
+                `armi_payment_method_id` INT DEFAULT NULL,
+                `armi_calculated_delivery_cost` DECIMAL(12, 2) DEFAULT NULL,
+                `customer_destination_latitude` DECIMAL(10, 8) DEFAULT NULL,
+                `customer_destination_longitude` DECIMAL(11, 8) DEFAULT NULL,
+                PRIMARY KEY (`order_id`),
+                CONSTRAINT `fk_armi_order_data_order_id` FOREIGN KEY (`order_id`) REFERENCES `?:orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS `?:armi_order_data`;</item>
+    </queries>
+    <language_variables>
+        <item lang="en" id="addon_armi_shipping_name">Armi Shipping Services</item>
+        <item lang="en" id="setting_google_maps_api_key_name">Google Maps API Key</item>
+        <item lang="en" id="setting_armi_api_base_url_name">Armi API Base URL</item>
+        <item lang="en" id="setting_armi_api_base_url_tooltip">The base URL for the Armi API. Change only if you have a custom endpoint.</item>
+        <item lang="en" id="shipping_armi_delivery">Armi Delivery</item>
+        <item lang="en" id="carrier_armi_logistics">Armi Logistics</item>
+        <item lang="en" id="armi_select_location_on_map">Select your delivery location on the map</item>
+        <item lang="en" id="armi_latitude">Latitude</item>
+        <item lang="en" id="armi_longitude">Longitude</item>
+        <item lang="en" id="armi_vendor_settings">Armi Settings</item>
+        <item lang="en" id="armi_api_key">Armi API Key</item>
+        <item lang="en" id="armi_business_id">Armi Business ID</item>
+        <item lang="en" id="armi_branch_office_id">Armi Branch Office ID (Origin)</item>
+        <item lang="en" id="armi_country_code">Armi API Country Code</item>
+        <item lang="en" id="armi_origin_location">Origin Location (for shipping)</item>
+        <item lang="en" id="armi_select_origin_on_map">Select origin on map</item>
+        <item lang="en" id="armi_create_armi_order">Create Armi Order</item>
+        <item lang="en" id="armi_cancel_armi_order">Cancel Armi Order</item>
+        <item lang="en" id="armi_order_status">Armi Order Status</item>
+        <item lang="en" id="armi_vehicle_type">Vehicle Type</item>
+        <item lang="en" id="armi_payment_method">Armi Payment Method</item>
+        <item lang="en" id="armi_locate_me">Locate Me</item>
+        <item lang="en" id="armi_error_calculating_shipping">Could not calculate Armi shipping cost at this time.</item>
+        <item lang="en" id="armi_order_created_successfully">Armi order created successfully. Armi Order ID: %s</item>
+        <item lang="en" id="armi_order_creation_failed">Failed to create Armi order. Error: %s</item>
+        <item lang="en" id="armi_order_cancelled_successfully">Armi order cancelled successfully.</item>
+        <item lang="en" id="armi_order_cancellation_failed">Failed to cancel Armi order. Error: %s</item>
+        <item lang="en" id="armi_destination_not_set">Armi destination not set. Please select a location on the map.</item>
+        <item lang="en" id="cannot_determine_vendor">Cannot determine vendor for Armi shipping.</item>
+        <item lang="en" id="armi_vendor_origin_not_set">Armi vendor origin location is not configured.</item>
+        <item lang="en" id="armi_shipping_description_admin">Calculates shipping costs using Armi API based on latitude and longitude.</item>
+        <item lang="en" id="armi_shipping_no_method_settings">This shipping method is configured globally and per vendor. No specific settings here.</item>
+        <item lang="en" id="armi_shipping.configuration_incomplete">Armi shipping configuration is incomplete. Please fill in all required fields.</item>
+        <item lang="en" id="armi_destination_not_set">Armi destination not set. Please select a location on the map.</item>
+        <item lang="en" id="cannot_determine_vendor">Cannot determine vendor for Armi shipping.</item>
+        <item lang="en" id="armi_shipping.map_loading">Loading map...</item>
+        <item lang="en" id="armi_shipping.map_interaction_hint_configure">Drag the marker to set the origin location. You can also type coordinates directly.</item>
+    </language_variables>
+</addon>

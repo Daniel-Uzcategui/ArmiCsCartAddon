@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "YOUR_COLLECTION_ID",
+		"name": "AmryNode ARMI API",
+		"description": "Postman collection for testing the AmryNode ARMI API integration, based on docs/latest.txt.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Business",
+			"item": [
+				{
+					"name": "Create Business",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Supermercado Central\",\n  \"type\": \"Retail\",\n  \"ownerId\": 123,\n  \"deliveryPerWeek\": 3,\n  \"imageUrl\": \"https://example.com/logo.png\",\n  \"branchOfficeList\": [\n    {\n      \"businessOwner\": 123,\n      \"name\": \"Sucursal Norte\",\n      \"city\": \"Bogotá\",\n      \"state\": \"Cundinamarca\",\n      \"address\": \"Av. Siempre Viva 742\",\n      \"addressIndications\": \"Frente al parque\",\n      \"lat\": 4.7110,\n      \"lng\": -74.0721,\n      \"phone\": \"3000000000\",\n      \"image\": \"https://example.com/sucursal.png\",\n      \"margins\": [\n        {\n          \"baseValue\": 0.5,\n          \"kmExtra\": 0.7,\n          \"otherIncentives\": 0.1\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/business/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"business",
+								"create"
+							]
+						},
+						"description": "Crea un nuevo negocio en la aplicación."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Business by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/business/{{businessId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"business",
+								"{{businessId}}"
+							]
+						},
+						"description": "Obtiene la información detallada de un negocio específico."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Business by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/business/{{businessId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"business",
+								"{{businessId}}"
+							]
+						},
+						"description": "Elimina un negocio de la aplicación."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Businesses by User ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/business/all/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"business",
+								"all",
+								"{{userId}}"
+							]
+						},
+						"description": "Retorna un listado de todos los negocios asociados a un usuario específico."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Business by ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nuevo Nombre del Negocio\",\n  \"type\": \"Retail\",\n  \"deliveryPerWeek\": 4,\n  \"imageUrl\": \"https://example.com/nueva-imagen.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/business/update/{{businessId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"business",
+								"update",
+								"{{businessId}}"
+							]
+						},
+						"description": "Permite actualizar la información de un negocio existente."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados con la gestión de Negocios."
+		},
+		{
+			"name": "Branch Offices",
+			"item": [
+				{
+					"name": "Create Branch Office",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"businessOwner\": 123,\n  \"name\": \"Sucursal Principal\",\n  \"city\": \"BOG\",\n  \"state\": \"Cundinamarca\",\n  \"address\": \"Calle 123 #45-67\",\n  \"addressIndications\": \"Frente al parque\",\n  \"lat\": 4.60971,\n  \"lng\": -74.08175,\n  \"phone\": \"+57 3011234567\",\n  \"image\": \"https://example.com/sucursal.png\",\n  \"margins\": [\n    {\n      \"baseValue\": 0.5,\n      \"kmExtra\": 0.15,\n      \"otherIncentives\": 0.2\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/branchOffice/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"branchOffice",
+								"create"
+							]
+						},
+						"description": "Crea una nueva sucursal asociada a un negocio existente."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Branch Offices by Business ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/branchOffice/all/{{businessId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"branchOffice",
+								"all",
+								"{{businessId}}"
+							]
+						},
+						"description": "Retorna un JSON con la información de todas las sucursales vinculadas a un negocio específico."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Branch Office",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"branchOfficeId\": 123,\n  \"businessId\": 456\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/branchOffice/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"branchOffice",
+								"delete"
+							]
+						},
+						"description": "Elimina una sucursal específica de la aplicación."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados con la gestión de Sucursales."
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"business_id\": 421,\n    \"total_value\": 10000.0,\n    \"user_tip\": 1000.0,\n    \"incentive_value\": 1000.0,\n    \"delivery_value\": 1000.0,\n    \"vehicle_type\": 1,\n    \"payment_method\": 1,\n    \"weight\": 14.55,\n    \"city\": \"bogota\",\n    \"instructions\": \"\",\n    \"orderInvoice\": \"\",\n    \"products\": [\n        {\n            \"product_id\": 1,\n            \"name\": \"Chocorramo\",\n            \"description\": \"Description chocorramo\",\n            \"quantity\": 1,\n            \"image_url\": \"image\",\n            \"unit_price\": 3000.0,\n            \"store_id\": 581\n        }\n    ],\n    \"client_info\": {\n        \"first_name\": \"Ivan\",\n        \"last_name\": \"Devia\",\n        \"phone\": \"1111111\",\n        \"email\": \"ivan@email.com\",\n        \"address\": \"Carrera ok\",\n        \"lat\": 4.64009397250415,\n        \"lng\": -74.13456105622083,\n        \"dni\" : \"1233892770\"\n    },\n    \"country\": \"COL\",\n    \"token\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/order/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"order",
+								"create"
+							]
+						},
+						"description": "Crea una orden en la aplicación. (Note: Request body uses snake_case)"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderId\": 123456,\n  \"reason\": \"El cliente solicitó la cancelación\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/monitor/order/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"order",
+								"cancel"
+							]
+						},
+						"description": "Cancela una orden existente."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Status by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/order/status/{{orderId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"order",
+								"status",
+								"{{orderId}}"
+							]
+						},
+						"description": "Consulta el estado actual de una orden."
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Delivery Cost",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"longitudeOrigin\": \"-74.12345\",\n  \"latitudeOrigin\": \"4.56789\",\n  \"longitudeDestination\": \"-74.54321\",\n  \"latitudeDestination\": \"4.98765\",\n  \"country\": \"COL\",\n  \"city\": \"Bogota\",\n  \"deliveryDate\": \"2025-05-15T10:00:00\",\n  \"vehicle\": \"MOTO\",\n  \"weight\": 2.5,\n  \"volume\": 0.02,\n  \"subtotal\": 30000.0,\n  \"tip\": 2000.0,\n  \"paymentMethod\": 1,\n  \"branchOfficeId\": 100,\n  \"hasRoundTrip\": false,\n  \"hasInsurance\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/order/delivery-cost",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order",
+								"delivery-cost"
+							]
+						},
+						"description": "Calcula el costo del envío entre un punto de origen y destino."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados con la gestión de Órdenes."
+		},
+		{
+			"name": "Cities",
+			"item": [
+				{
+					"name": "Get City Code",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "armi-business-api-key",
+								"value": "{{armi-business-api-key}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "{{country}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/monitor/city/{{cityName}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"monitor",
+								"city",
+								"{{cityName}}"
+							],
+							"variable": [
+								{
+									"key": "cityName",
+									"value": "Bogota",
+									"description": "Nombre de la ciudad (e.g., Bogotá, Medellín)"
+								}
+							]
+						},
+						"description": "Obtiene el código interno de una ciudad."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados con la gestión de Ciudades."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://armi-business-monitor-dot-armirene-369418.uc.r.appspot.com",
+			"type": "string"
+		},
+		{
+			"key": "armi-business-api-key",
+			"value": "YOUR_API_KEY_HERE",
+			"type": "string"
+		},
+		{
+			"key": "country",
+			"value": "COL",
+			"type": "string"
+		},
+		{
+			"key": "businessId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"key": "orderId",
+			"value": "B37274",
+			"type": "string"
+		},
+		{
+			"key": "cityName",
+			"value": "Bogota",
+			"type": "string"
+		}
+	]
+}
