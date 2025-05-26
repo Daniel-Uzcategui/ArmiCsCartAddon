@@ -167,7 +167,7 @@ class ArmiLogistics implements IService
     public static function getInfo()
     {
         return [
-            'name' => __('carrier_armi_logistics'), // Change this to the carrier name
+        'name' => __('shipping_armi_delivery'), // This should be the shipping method name
             'description' => __('armi_shipping_description_admin'), // Admin description
             'carrier' => 'armi_logistics', // The code of the carrier this service belongs to
             // 'configurable' => true is implied if getSettingsForm returns a template path
