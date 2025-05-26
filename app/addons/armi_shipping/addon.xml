@@ -117,7 +117,6 @@
         <item lang="en" id="armi_vehicle_type_1">Bicycle</item>
         <item lang="en" id="armi_vehicle_type_2">Motorcycle</item>
         <item lang="en" id="armi_vehicle_type_3">Car</item>
-        {* Armi Order Statuses - Add more as needed based on techContext.md and ARMI_STATUS.csv *}
         <item lang="en" id="armi_status_0">Received</item>
         <item lang="en" id="armi_status_1">Issued</item>
         <item lang="en" id="armi_status_2">Sent</item>
