@@ -255,35 +255,36 @@ function fn_armi_shipping_shippings_configure_post($shipping_id, $shipping_data,
 {
     // Check if the current shipping service module is 'armi_logistics'
     if ($module == 'armi_shipping') {
-        // Enqueue the JavaScript file for the map on the configuration page.
-        // Tygh::$app['view']->風呂eadJs() is not the correct method.
-        // We should use Tygh::$app['view']->getTemplateVars('scripts') or add to a specific asset manager if available,
-        // or directly output script tags if simpler for backend.
-        // For backend, often scripts are added via Registry::get('layout.footer_scripts') or specific template includes.
+        // No JavaScript or map-related logic needed here as per user's request to remove map.
+    }
+}
 
-        // A common way to add JS in backend is to use the 'scripts' array in the view object.
-        // However, for AJAX-loaded tabs, this might not always work as expected without specific handling.
-        // The JS file itself has logic to initialize when the tab is shown.
+/**
+ * Hook function for checkout_post_customer_information.
+ * Used to prepare data for the checkout view, specifically for Armi shipping map integration.
+ *
+ * @param string $mode The mode of the checkout controller.
+ * @param array $cart The cart data.
+ * @param array $auth User authentication data.
+ * @param array $profile_fields User profile fields.
+ */
+function fn_armi_shipping_checkout_post_customer_information($mode, $cart, $auth, $profile_fields)
+{
+    if (AREA == 'C' && $mode == 'checkout') {
+        // Check if Armi shipping might be available or is selected to decide if we load the map resources.
+        // For now, let's assume it's always loaded if the addon is active,
+        // and JS will handle showing/hiding the map based on selection.
 
-        // Let's ensure the Google Maps API key is available to the JS.
-        // The JS file tries to get it from Tygh.addons.armi_shipping.google_maps_api_key or a hidden input.
-        // We can set it here if it's not already set by another part of the addon.
         $google_maps_api_key = Registry::get('addons.armi_shipping.google_maps_api_key');
-        if (!isset(Tygh::$app['view']->getTemplateVars('addons')['armi_shipping']['google_maps_api_key'])) {
-            Tygh::$app['view']->assign('google_maps_api_key', $google_maps_api_key); // Make it available as {$google_maps_api_key}
-            // Or more specifically for JS:
-            if (!isset(Tygh::$app['addons']['armi_logistics'])) {
-                Tygh::$app['addons']['armi_logistics'] = [];
-            }
-            Tygh::$app['addons']['armi_logistics']['google_maps_api_key'] = $google_maps_api_key;
-        }
-        
-        // Enqueue the main configuration map script
-        // The path should be relative to the CS-Cart root's js directory
-        Tygh::$app['view']->registerJs('js/addons/armi_shipping/configure_map.js', true); // true for backend
 
-        // The configure_map.js already has logic to initialize the map when the tab becomes visible.
-        // It also includes the Google Maps API script dynamically.
+        if (!empty($google_maps_api_key)) {
+            Tygh::$app['view']->assign('armi_google_maps_api_key', $google_maps_api_key);
+            
+            // Enqueue the checkout map JavaScript file
+            Tygh::$app['view']->setScript('js/addons/armi_shipping/checkout_map.js', true);
+        } else {
+            fn_log_event('armi_shipping', 'configuration_error', ['message' => 'Google Maps API Key for Armi Shipping is not configured. Checkout map will not load.']);
+        }
     }
 }
 ?>

@@ -71,25 +71,3 @@
                class="input-text armi-longitude" />
     </div>
 </div>
-
-<div class="control-group">
-    <div class="controls">
-        <div id="armi_origin_map_canvas" style="width: 100%; height: 400px; border: 1px solid #ccc;">
-            {__("armi_shipping.map_loading")}
-        </div>
-        <p class="muted description">{__("armi_shipping.map_interaction_hint_configure")}</p>
-    </div>
-</div>
-
-{* 
-    Hidden input for Google Maps API Key - this should ideally come from global addon settings.
-    For now, assuming it's available in the template context or will be added via JS.
-    If Tygh::$app.addons.armi_shipping.google_maps_api_key is available:
-    <input type="hidden" id="armi_google_maps_api_key_configure" value="{Tygh::$app.addons.armi_shipping.google_maps_api_key}" />
-*}
-
-{* 
-    JavaScript for this map will need to be loaded.
-    Example: <script type="text/javascript" src="{$config.current_location}/js/addons/armi_shipping/configure_map.js"></script> 
-    And that JS file would initialize the map for #armi_origin_map_canvas, #armi_origin_latitude, #armi_origin_longitude
-*}

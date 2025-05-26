@@ -37,13 +37,16 @@ The project is currently in the initial phase of development. The primary focus 
     *   `ArmiShipping::calculateRate()` updated to use `service_params` and call `fn_armi_shipping_api_request_with_params()`.
 *   **Core Error Context**: The "Undefined variable $shipping" error in the core `shippings.php` is primarily an issue for administrators viewing the "Configure" tab. Since vendors are the primary users of this tab for setting up their shipping methods, this core error is less critical for the addon's main workflow but remains a known CS-Cart core behavior for admins.
 *   **[2025-05-23] Fixed Empty Configure Tab**:
-    *   Corrected the module check in `app/addons/armi_shipping/func.php` within `fn_armi_shipping_shippings_configure_post` from `if ($module == 'armi_logistics')` to `if ($module == 'armi_shipping')`. This ensures the `configure_map.js` and Google Maps API key are correctly loaded.
+    *   Corrected the module check in `app/addons/armi_shipping/func.php` within `fn_armi_shipping_shippings_configure_post` from `if ($module == 'armi_logistics')` to `if ($module == 'armi_shipping')`.
     *   Added missing language variables (`armi_shipping.configuration_incomplete`, `armi_destination_not_set`, `cannot_determine_vendor`, `armi_shipping.map_loading`, `armi_shipping.map_interaction_hint_configure`) to `app/addons/armi_shipping/addon.xml`.
+*   **[2025-05-23] Removed Google Maps Integration from Configure Tab**:
+    *   Removed map-related HTML elements and comments from `app/addons/armi_shipping/views/shippings/components/services/armi_shipping_configure.tpl`.
+    *   Removed JavaScript enqueueing and Google Maps API key assignment logic from `fn_armi_shipping_shippings_configure_post` in `app/addons/armi_shipping/func.php`. The tab will now rely solely on standard input fields for origin latitude and longitude.
 
 ## 3. Immediate Next Steps
 1.  **Testing**: Thoroughly test the vendor workflow:
     *   Vendor creates a new shipping method, selects "Armi Delivery".
-    *   Vendor uses the "Configure" tab to input their Armi API Key, Business ID, Branch Office ID, Country, and select Origin Lat/Lng using the map.
+    *   Vendor uses the "Configure" tab to input their Armi API Key, Business ID, Branch Office ID, Country, Origin Lat/Lng using the plain input fields.
     *   Ensure these settings are saved correctly in `service_params`.
     *   Test shipping calculation at checkout using these `service_params`.
 2.  **Review Core Files**:
@@ -61,15 +64,15 @@ The project is currently in the initial phase of development. The primary focus 
     *   Implement table removal in `fn_armi_shipping_uninstall()`.
 6.  **Settings Implementation**:
     *   Global addon settings (Google Maps API Key in `addon.xml`).
-    *   Vendor-specific settings page/tab (controller, templates, JavaScript for map).
+    *   Vendor-specific settings page/tab (controller, templates).
     *   Logic to save/retrieve vendor settings from `cscart_armi_vendor_settings`.
 7.  **Shipping Calculation Logic**:
     *   Implement `shippings_calculate_rates` hook function.
     *   API call to Armi `order/delivery-cost`.
 8.  **Checkout Integration**:
-    *   Template modifications for Google Map display.
-    *   JavaScript for map interaction, lat/long capture, and address field hiding.
-    *   Controller/AJAX logic for handling map data.
+    *   Template modifications for Google Map display (if re-introduced later).
+    *   JavaScript for lat/long capture and address field hiding (if map is re-introduced, or for plain input fields).
+    *   Controller/AJAX logic for handling map data (if map is re-introduced).
 9.  **Order Management (Vendor Panel)**:
     *   Template modifications for Armi actions and status display.
     *   Controller logic for "Create Armi Order" (including vehicle type selection, payment method logic, API call to `monitor/order/create`).
@@ -90,7 +93,6 @@ The project is currently in the initial phase of development. The primary focus 
 *   **Vendor Settings UI**: Decide whether to integrate into the existing company settings page or create a new, dedicated page for Armi vendor settings. A dedicated page might be cleaner.
 *   **Armi API Base URL**: The Postman collection uses `https://armi-business-monitor-dot-armirene-369418.uc.r.appspot.com`. Consider if this should be a configurable setting in the addon (e.g., for testing against a staging Armi API, if one exists). For now, assume it's fixed.
 *   **Error Handling Specificity**: Define how detailed API error messages should be logged versus displayed to users (vendors/customers).
-*   **"Locate Me" Button**: Feasibility for the Google Maps "Locate Me" button on the vendor settings page needs to be confirmed during implementation. It relies on browser geolocation capabilities.
 *   **Mapping CS-Cart Payment Methods to Armi**: The logic for determining if a CS-Cart payment is "prepaid" to default Armi `payment_method` to `3` needs to be robust. This might involve checking `processor_params.is_offline == 'N'` or similar flags on the CS-Cart payment method.
 
 ## 5. Important Patterns & Preferences (Emerging)

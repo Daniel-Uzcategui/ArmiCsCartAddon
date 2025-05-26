@@ -42,4 +42,10 @@ fn_register_hooks(
     'fn_armi_shipping_shippings_configure_post'
 );
 
+// Hook to prepare data for the checkout view (e.g., assign API key, enqueue JS)
+fn_register_hooks(
+    'checkout_post_customer_information', // This hook runs after customer information is processed, good for view prep
+    'fn_armi_shipping_checkout_post_customer_information'
+);
+
 ?>

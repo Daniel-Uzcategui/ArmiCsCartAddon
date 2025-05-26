@@ -112,6 +112,9 @@
         *   *Next Milestone*: Vendor settings page fully functional (saving, map interaction robust).
         *   *Next Milestone*: Shipping calculation working at checkout with Google Maps.
         *   *Next Milestone*: Vendor order management (create/cancel/status) functional.
-*   **[2025-05-23] Fixed Empty Configure Tab**:
+*   **[2025-05-23] Fixed Empty Configure Tab (Initial Attempt)**:
     *   Corrected the module check in `app/addons/armi_shipping/func.php` within `fn_armi_shipping_shippings_configure_post` from `if ($module == 'armi_logistics')` to `if ($module == 'armi_shipping')`.
     *   Added missing language variables (`armi_shipping.configuration_incomplete`, `armi_destination_not_set`, `cannot_determine_vendor`, `armi_shipping.map_loading`, `armi_shipping.map_interaction_hint_configure`) to `app/addons/armi_shipping/addon.xml`.
+*   **[2025-05-23] Removed Google Maps Integration from Configure Tab**:
+    *   Removed map-related HTML elements and comments from `app/addons/armi_shipping/views/shippings/components/services/armi_shipping_configure.tpl`.
+    *   Removed JavaScript enqueueing and Google Maps API key assignment logic from `fn_armi_shipping_shippings_configure_post` in `app/addons/armi_shipping/func.php`. The tab will now rely solely on standard input fields for origin latitude and longitude.

@@ -104,5 +104,28 @@
         <item lang="en" id="cannot_determine_vendor">Cannot determine vendor for Armi shipping.</item>
         <item lang="en" id="armi_shipping.map_loading">Loading map...</item>
         <item lang="en" id="armi_shipping.map_interaction_hint_configure">Drag the marker to set the origin location. You can also type coordinates directly.</item>
+        <item lang="en" id="text_armi_coordinates_saved">Coordinates saved successfully.</item>
+        <item lang="en" id="text_armi_invalid_coordinates">Invalid coordinates provided.</item>
+        <item lang="en" id="armi_missing_order_creation_data">Order ID or vehicle type not provided for Armi order creation.</item>
+        <item lang="en" id="armi_shipping_settings_not_found_for_order">Armi shipping settings could not be found for this order. Ensure the shipping method used is correctly configured.</item>
+        <item lang="en" id="armi_vendor_credentials_incomplete">Vendor Armi API Key, Country Code, or Business ID is not configured for the shipping method used.</item>
+        <item lang="en" id="armi_customer_destination_coordinates_not_found">Customer destination coordinates not found for this order.</item>
+        <item lang="en" id="armi_order_creation_failed_generic">Failed to create Armi order. Please check logs for details.</item>
+        <item lang="en" id="armi_shipping_management">Armi Shipping Management</item>
+        <item lang="en" id="armi_order_id_label">Armi Order ID</item>
+        <item lang="en" id="armi_current_status_label">Current Armi Status</item>
+        <item lang="en" id="armi_vehicle_type_1">Bicycle</item>
+        <item lang="en" id="armi_vehicle_type_2">Motorcycle</item>
+        <item lang="en" id="armi_vehicle_type_3">Car</item>
+        {* Armi Order Statuses - Add more as needed based on techContext.md and ARMI_STATUS.csv *}
+        <item lang="en" id="armi_status_0">Received</item>
+        <item lang="en" id="armi_status_1">Issued</item>
+        <item lang="en" id="armi_status_2">Sent</item>
+        <item lang="en" id="armi_status_3">Assigned</item>
+        <item lang="en" id="armi_status_4">Picking</item>
+        <item lang="en" id="armi_status_5">Invoiced</item>
+        <item lang="en" id="armi_status_6">Delivered</item>
+        <item lang="en" id="armi_status_7">Finalized</item>
+        <item lang="en" id="armi_status_14">Cancelled</item>
     </language_variables>
 </addon>
